@@ -1,146 +1,26 @@
 import { useState } from "react";
-import { RotateCw } from "lucide-react";
-import logo from "@/assets/images/logo-universal.png";
+import { Bell, ChevronRight, CircleHelp, Home, Moon, MoreHorizontal, Play, Settings, Sun, Zap } from "lucide-react";
 import "@/index.css";
-import { Greet } from "../wailsjs/go/main/App";
-import { WindowSetSize } from "../wailsjs/runtime/runtime";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 function App() {
-  const [resultText, setResultText] = useState("Enter your name to get started!");
-  const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isPortrait, setIsPortrait] = useState(false);
-
-  async function greet() {
-    if (!name.trim()) {
-      setResultText("Please enter a name first! 🙏");
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const result = await Greet(name);
-      setResultText(result);
-    } catch (error) {
-      setResultText("Oops! Something went wrong. 😕");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      greet();
-    }
-  };
-
-  function toggleOrientation() {
-    const nextIsPortrait = !isPortrait;
-    WindowSetSize(nextIsPortrait ? 600 : 1024, nextIsPortrait ? 1024 : 600);
-    setIsPortrait(nextIsPortrait);
-  }
+  const [activeTab, setActiveTab] = useState("Home");
+  const [isOn, setIsOn] = useState(true);
+  const [brightness, setBrightness] = useState(72);
+  const [mode, setMode] = useState("Day");
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex flex-col items-center justify-center p-8">
-      <div className="w-full max-w-2xl space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <img
-            src={logo}
-            className="w-32 h-32 object-contain mx-auto drop-shadow-lg hover:scale-105 transition-transform"
-            alt="Wails Logo"
-          />
-          <div className="space-y-2">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900">
-              Welcome to Wails!
-            </h1>
-            <p className="text-slate-600 text-lg">
-              React + TypeScript + Vite + Tailwind CSS v4 + shadcn/ui
-            </p>
-          </div>
-        </div>
-
-        {/* Main Card */}
-        <Card className="shadow-xl border-slate-200">
-          <CardHeader>
-            <CardTitle className="text-2xl">Greet Function Demo</CardTitle>
-            <CardDescription>
-              Try out the Go backend integration by entering your name below
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-base">
-                Your Name
-              </Label>
-              <Input
-                id="name"
-                placeholder="Enter your name..."
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                onKeyPress={handleKeyPress}
-                disabled={isLoading}
-                className="text-base h-11"
-              />
-            </div>
-            <div className="p-6 bg-slate-50 rounded-lg border border-slate-200 min-h-20 flex items-center justify-center">
-              <p className="text-center font-medium text-slate-900 text-lg">
-                {resultText}
-              </p>
-            </div>
-          </CardContent>
-          <CardFooter className="flex gap-3">
-            <Button
-              onClick={greet}
-              disabled={isLoading}
-              className="flex-1 h-11 text-base"
-            >
-              {isLoading ? "Greeting..." : "Greet Me! 👋"}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={toggleOrientation}
-              className="h-11"
-            >
-              <RotateCw />
-              {isPortrait ? "Landscape" : "Portrait"}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setName("");
-                setResultText("Enter your name to get started!");
-              }}
-              disabled={isLoading}
-              className="h-11"
-            >
-              Clear
-            </Button>
-          </CardFooter>
-        </Card>
-
-        {/* Footer */}
-        <div className="text-center space-y-2">
-          <p className="text-sm text-slate-600">
-            Built with ❤️ using Wails v2.11.0
-          </p>
-          <p className="text-xs text-slate-500">
-            Go backend • React frontend • Native desktop app
-          </p>
-        </div>
+    <main className="h-screen overflow-hidden bg-[#f4f6fb] p-3 text-slate-900">
+      <div className="mx-auto flex h-full max-w-5xl flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_24px_70px_rgba(42,62,99,0.13)]">
+        <header className="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-3"><div className="flex items-center gap-3"><div className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-200"><Zap size={20} fill="currentColor" /></div><div><p className="text-lg font-bold tracking-tight">Control Center</p><p className="text-xs font-medium text-slate-400">Your space, your way</p></div></div><button aria-label="Notifications" className="grid h-10 w-10 place-items-center rounded-xl bg-slate-50 text-slate-500 active:scale-95"><Bell size={19} /></button></header>
+        <section className="min-h-0 flex-1 overflow-hidden px-6 py-4">
+          <div className="mb-4 flex items-end justify-between"><div><p className="text-xs font-semibold text-indigo-600">GOOD MORNING</p><h1 className="mt-0.5 text-2xl font-bold tracking-tight">Living room</h1></div><button className="flex h-9 items-center gap-1 rounded-xl px-3 text-sm font-semibold text-slate-500 active:scale-95">More <MoreHorizontal size={18} /></button></div>
+          <div className="grid gap-3 md:grid-cols-[1.2fr_0.8fr]"><article className="rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 p-4 text-white shadow-lg shadow-indigo-200"><div className="flex items-start justify-between"><div className="rounded-xl bg-white/15 p-2.5"><Zap size={20} fill="currentColor" /></div><button onClick={() => setIsOn(!isOn)} aria-label="Toggle room power" className={`relative h-8 w-14 rounded-full p-1 ${isOn ? "bg-white" : "bg-black/20"}`}><span className={`block h-6 w-6 rounded-full shadow-sm transition ${isOn ? "translate-x-6 bg-indigo-600" : "bg-white"}`} /></button></div><p className="mt-4 text-xs font-medium text-indigo-100">Room status</p><div className="mt-1 flex items-end justify-between gap-4"><h2 className="text-2xl font-bold">{isOn ? "All set" : "Paused"}</h2><span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">{isOn ? "4 devices on" : "Devices off"}</span></div></article><article className="rounded-2xl border border-slate-100 bg-[#fafbff] p-4"><div className="flex items-center justify-between"><div className="grid h-10 w-10 place-items-center rounded-xl bg-amber-100 text-amber-500"><Sun size={20} /></div><span className="text-sm font-semibold text-slate-400">{brightness}%</span></div><p className="mt-3 font-bold">Brightness</p><input className="mt-3 h-2 w-full cursor-pointer accent-indigo-600" type="range" min="0" max="100" value={brightness} onChange={(event) => setBrightness(Number(event.target.value))} aria-label="Brightness" /></article></div>
+          <div className="mt-4"><div className="mb-2 flex items-center justify-between"><h2 className="text-base font-bold">Quick actions</h2><button className="text-sm font-semibold text-indigo-600">Edit</button></div><div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{[{ label: "Relax", icon: Moon, color: "bg-violet-100 text-violet-600" }, { label: "Focus", icon: Play, color: "bg-sky-100 text-sky-600" }, { label: "Bright", icon: Sun, color: "bg-amber-100 text-amber-500" }, { label: "Help", icon: CircleHelp, color: "bg-rose-100 text-rose-500" }].map(({ label, icon: Icon, color }) => <button key={label} className="flex min-h-20 flex-col items-start justify-between rounded-2xl border border-slate-100 bg-white p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98]"><span className={`grid h-9 w-9 place-items-center rounded-xl ${color}`}><Icon size={17} /></span><span className="text-sm font-semibold">{label}</span></button>)}</div></div>
+          <div className="mt-4 rounded-2xl bg-slate-50 p-3"><button onClick={() => setMode(mode === "Day" ? "Night" : "Day")} className="flex w-full items-center gap-3 text-left active:opacity-70"><div className="grid h-9 w-9 place-items-center rounded-xl bg-white text-slate-500 shadow-sm">{mode === "Day" ? <Sun size={18} /> : <Moon size={18} />}</div><div className="flex-1"><p className="text-sm font-semibold">{mode} mode</p><p className="text-xs text-slate-400">Tap to switch appearance</p></div><ChevronRight className="text-slate-300" size={19} /></button></div>
+        </section>
+        <nav className="flex shrink-0 border-t border-slate-100 bg-white px-6 py-2">{[{ label: "Home", icon: Home }, { label: "Controls", icon: Zap }, { label: "Settings", icon: Settings }].map(({ label, icon: Icon }) => { const selected = activeTab === label; return <button key={label} onClick={() => setActiveTab(label)} className={`flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-xs font-semibold active:scale-95 ${selected ? "text-indigo-600" : "text-slate-400"}`}><Icon size={19} fill={selected ? "currentColor" : "none"} /><span>{label}</span></button>; })}</nav>
       </div>
-    </div>
+    </main>
   );
 }
 
